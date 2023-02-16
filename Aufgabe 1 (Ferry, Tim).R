@@ -50,3 +50,5 @@ MatheLK <- sample(c("ja","nein"), 100, replace=TRUE, prob = c(0.75,0.25))
 #}
 
 Daten <- data.frame(Alter,MatheLK,Matheinteresse,Programmierinteresse, Studienfach)
+write.csv2(Daten, file = "C:/Users/ferry/OneDrive/Dokumente/__UNI/3. Semester/Wiss. Arbeiten/Datensatz_Aufgabe1.csv")
+
