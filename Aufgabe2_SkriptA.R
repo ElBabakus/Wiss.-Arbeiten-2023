@@ -14,7 +14,7 @@
 #     den Zusammengang zwischen einer metrischen und einer                     #
 #     dichotomen Variablen berechnet und ausgibt                               #
 # (e) Eine Funktion, die eine mindestens ordinal skalierte Variable            #
-#     quantilbasiert kategorisiert (z.B. in niedrig, mittel, hochâ)            #
+#     quantilbasiert kategorisiert (z.B. in niedrig, mittel, hoch)            #
 # (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier      #
 #     kategorialen Variablen erstellt                                          #
 # Freiwillig: weitere zur Deskription und Visualisierung geeignete             #
@@ -106,7 +106,7 @@ calculate_mod <- function(x){
 }
 
 # Spannweite
-calcualte_range <- function(x){
+calculate_range <- function(x){
   range(x)
 }
 
@@ -145,7 +145,7 @@ calculate_sd <- function(x){
 # den Zusammenhang zwischen zwei kategorialen Variablen                        #  
 # berechnet ausgibt                                                            #
 
-# deskriptive bivariate Statistiken für den Zusammenhang zwischen zwei kategorialen Variablen
+# deskriptive bivariate Statistiken fÃ¼r den Zusammenhang zwischen zwei kategorialen Variablen
 # Matheinteresse und Programmierinteresse mit Kontingenztafel:
 f <- function(){
   A <- matrix(0,7,7)
