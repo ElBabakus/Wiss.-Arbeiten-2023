@@ -21,7 +21,7 @@
 #     Funktionen                                                               #
 #                                                                              #
 # Authoren: Tim Burkholder, Florian Haschke, Ferry Heinzelmann, Eva Noether,   #
-#           Rafael Slodzinsk                                                   #
+#           Rafael Slodzinski                                                   #
 ################################################################################
 
 # 00 Packages und Datei laden --------------------------------------------------
@@ -66,6 +66,17 @@ daten <- read_csv(file = "\\Datensatz_Aufgabe1.csv")
 # den Zusammenhang zwischen zwei kategorialen Variablen                        #  
 # berechnet ausgibt                                                            #
 
+# deskriptive bivariate Statistiken für den Zusammenhang zwischen zwei kategorialen Variablen
+# Matheinteresse und Programmierinteresse mit Kontingenztafel:
+f <- function(){
+  A <- matrix(0,7,7)
+  for (i in 1:100){
+    A[Daten$Matheinteresse[i], Daten$Programmierinteresse[i]] <- A[Daten$Matheinteresse[i], Daten$Programmierinteresse[i]] + 1
+  }
+  return(A)
+}
+A <- f()
+mosaicplot(A, xlab = "Programmierinteresse", ylab = "Matheinteresse", main = "")
 
 
 
