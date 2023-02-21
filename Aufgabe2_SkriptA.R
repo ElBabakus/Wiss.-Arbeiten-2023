@@ -66,6 +66,42 @@ daten <- read_csv(file = "\\Datensatz_Aufgabe1.csv")
 # den Zusammenhang zwischen zwei kategorialen Variablen                        #  
 # berechnet ausgibt                                                            #
 
+# Chi2 - Koeffizient #
+# Kann fuer nominale Merkmale gewaehlt werden:
+# Bsp.: X = x1, x2 (MatheLK);   Y = y1,y2,y3,y4 (Studiengang)
+# Ist noetig zur Berechnung anderer Koeff. (z.B. Cramer, Phi, etc.)
+chi2_function <- function(X,Y){
+  n <- length(X)
+  X <- factor(X)
+  Y <- factor(Y)
+  # Erzeuge Tabelle (in Form einer Matrix) zur Berechnung von Chi2 Koeff.
+  H <- matrix(0, length(levels(X)), length(levels(Y)))
+  rownames(H) <- levels(X)
+  colnames(H) <- levels(Y)
+  for(i in 1:length(levels(X))){
+    for(j in 1:length(levels(Y))){
+      H[i,j] <- sum (X == levels(X)[i] & Y == levels(Y)[j])
+    }
+  }
+  # Erzeuge Tabelle (in Form einer Matrix) mit den Erwartungshaeufigkeiten.
+  E <- matrix(0, length(levels(X)), length(levels(Y)))
+  rownames(E) <- levels(X)
+  colnames(E) <- levels(Y)
+  for(i in 1:length(levels(X))){
+    for(j in 1:length(levels(Y))){
+      E[i,j] <- n * (sum(H[i,])/n) * (sum(H[,j])/n)
+    }
+  }
+  # Berechne mit Hilfe von H und E nun chi2
+  chi2 <- 0
+  for(i in 1:length(levels(X))){
+    for(j in 1:length(levels(Y))){
+      chi2 <- chi2 + ((H[i,j]-E[i,j])^2/E[i,j])
+    }
+  }
+  return((chi2))
+}
+
 # deskriptive bivariate Statistiken für den Zusammenhang zwischen zwei kategorialen Variablen
 # Matheinteresse und Programmierinteresse mit Kontingenztafel:
 f <- function(){
