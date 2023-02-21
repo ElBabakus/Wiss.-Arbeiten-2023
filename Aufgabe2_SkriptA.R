@@ -99,7 +99,10 @@ chi2_function <- function(X,Y){
       chi2 <- chi2 + ((H[i,j]-E[i,j])^2/E[i,j])
     }
   }
-  return((chi2))
+  cat("Chi2-Koeff.:", chi2,"\n")
+  cat("Cramer-Koeff.:", sqrt(chi2/(n*(min(length(levels(X)), length(levels(Y)))-1))))
+  cat("Pearson-Koeff.:", sqrt(chi2/(chi2+n)))
+  
 }
 
 # deskriptive bivariate Statistiken für den Zusammenhang zwischen zwei kategorialen Variablen
