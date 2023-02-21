@@ -42,9 +42,18 @@ library(Rmisc )   # Konfidentintervall
 
 # 00b DATEN LADEN --------------------------------------------------------------
 # Einlesen der Daten (als data.frame)
+<<<<<<< Updated upstream
 # TODO: relativen Pfad anlegen 
 daten <- read_csv(file = "\\Datensatz_Aufgabe1.csv")
+=======
+library(readr)
+Datensatz_Aufgabe1 <- read_delim("Datensatz_Aufgabe1.csv", 
+                                 delim = ";", escape_double = FALSE, trim_ws = TRUE)
+>>>>>>> Stashed changes
 
+daten <- read_csv(file = "./Datensatz_Aufgabe1.csv")
+daten <- Datensatz_Aufgabe1
+Daten <- Datensatz_Aufgabe1
 
 # 01 DESKRIPTIVE STATISTIK - metr. Variablen -----------------------------------
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken         #
@@ -57,16 +66,53 @@ daten <- read_csv(file = "\\Datensatz_Aufgabe1.csv")
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken            #
 # für kategoriale Variablen berechnet und ausgibt                              #
 
+# Funktion berechnet für die übergebene Variable die 
+# absoluten Häufigkeiten der jweiligen Ausprägungen
+abs_Haeufigkeiten <- function(x){
+  table(x)
+}
 
+# Funktion berechnet für die übergebene Variable die 
+# relativen Häufigkeiten der jweiligen Ausprägungen
+rel_Haeufigkeiten <- function(x){
+  prop.table(abs_Haeufigkeiten(x))
+}
 
+erzeuge_Vekor<- function(input){
+   as.data.frame(input)[,2]
+ }
 
+# Siehe Skript WS22/23 Seite 72 Kap. 5.2
+#  Kommentar tbd 
+#
+
+entropy <- function(Variable) {
+  absolute <-abs_Haeufigkeiten(Variable)
+  freq <- rel_Haeufigkeiten(Variable)
+  vec_abs <- erzeuge_Vekor(absolute)
+  vec_freq <- erzeuge_Vekor(freq)
+  # entferne leere Felder auch null wegen der kommenden Log funktion 
+  vec_abs<-vec_abs[vec_abs>0]    
+  vec_freq<-vec_freq[vec_freq>0] 
+  # berechne die Entropie Log von Anzahl_Objekte minus gewichtete Summe der Log-Werte der Klassen-Stärken
+  log2(length(Variable)) - sum(vec_freq * log2(vec_abs)) 
+}
+
+# Siehe Skript WS22/23 Seite 73 Kap. 5.2
+#  Kommentar tbd 
+#
+normierte_Entropie<- function(Variable){
+  absolute <-abs_Haeufigkeiten(Variable)
+  vec_abs <- erzeuge_Vekor(absolute)
+  entropy(Variable)/log2(length(vec_abs))
+}
 
 # 03 DESKRIPTIVE BIV. STATISTIK - zwei kategor. Variablen ----------------------
 # Eine Funktion, die geeignete deskriptive bivariate Statistiken für           #
 # den Zusammenhang zwischen zwei kategorialen Variablen                        #  
 # berechnet ausgibt                                                            #
 
-# deskriptive bivariate Statistiken f�r den Zusammenhang zwischen zwei kategorialen Variablen
+# deskriptive bivariate Statistiken f?r den Zusammenhang zwischen zwei kategorialen Variablen
 # Matheinteresse und Programmierinteresse mit Kontingenztafel:
 f <- function(){
   A <- matrix(0,7,7)
