@@ -42,16 +42,14 @@ library(Rmisc )   # Konfidentintervall
 
 # 00b DATEN LADEN --------------------------------------------------------------
 # Einlesen der Daten (als data.frame)
-<<<<<<< Updated upstream
 # TODO: relativen Pfad anlegen 
-daten <- read_csv(file = "\\Datensatz_Aufgabe1.csv")
-=======
+# daten <- read_csv(file = "\\Datensatz_Aufgabe1.csv")
 library(readr)
-Datensatz_Aufgabe1 <- read_delim("Datensatz_Aufgabe1.csv", 
-                                 delim = ";", escape_double = FALSE, trim_ws = TRUE)
->>>>>>> Stashed changes
 
-daten <- read_csv(file = "./Datensatz_Aufgabe1.csv")
+# daten <- read_csv(file = "./Datensatz_Aufgabe1.csv")
+ Datensatz_Aufgabe1 <- read_delim("Datensatz_Aufgabe1.csv", 
+                                 delim = ";", escape_double = FALSE, trim_ws = TRUE)
+
 daten <- Datensatz_Aufgabe1
 Daten <- Datensatz_Aufgabe1
 
@@ -66,27 +64,36 @@ Daten <- Datensatz_Aufgabe1
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken            #
 # für kategoriale Variablen berechnet und ausgibt                              #
 
-# Funktion berechnet für die übergebene Variable die 
-# absoluten Häufigkeiten der jweiligen Ausprägungen
+# Funktion berechnet die absoluten Häufigkeiten 
+# der jeweiligen Ausprägungen
 abs_Haeufigkeiten <- function(x){
   table(x)
 }
 
-# Funktion berechnet für die übergebene Variable die 
-# relativen Häufigkeiten der jweiligen Ausprägungen
+# Funktion berechnet die relativen Häufigkeiten 
+# der jeweiligen Ausprägungen
 rel_Haeufigkeiten <- function(x){
   prop.table(abs_Haeufigkeiten(x))
 }
 
+## Hilfsmethode um aus einer Variablen einen Vektor zu machen 
 erzeuge_Vekor<- function(input){
    as.data.frame(input)[,2]
  }
 
+# Funktion Berechnet den Modalwert zu einem Merkmal 
+# Es wird zunächst der Vektor gegildet dann 
+# die Ausprägung mit dem Größten Vorkommen bestimmt und zurückgegeben
+berechne_modalwert <- function(x){
+  test <- abs_Haeufigkeiten(x)
+  names(test )[which.max(test)]
+}
+
+# Funktion berechnet die Entropie eines Merkmals 
 # Siehe Skript WS22/23 Seite 72 Kap. 5.2
-#  Kommentar tbd 
-#
 
 entropy <- function(Variable) {
+  # Berechne Absolute und relative Häufigkeiten 
   absolute <-abs_Haeufigkeiten(Variable)
   freq <- rel_Haeufigkeiten(Variable)
   vec_abs <- erzeuge_Vekor(absolute)
@@ -94,13 +101,14 @@ entropy <- function(Variable) {
   # entferne leere Felder auch null wegen der kommenden Log funktion 
   vec_abs<-vec_abs[vec_abs>0]    
   vec_freq<-vec_freq[vec_freq>0] 
-  # berechne die Entropie Log von Anzahl_Objekte minus gewichtete Summe der Log-Werte der Klassen-Stärken
+  
+  # berechne die Entropie als : 
+  # LOG von Anzahl_Objekte minus  Summe der gewichteten Log-Werte der Absoluten Klassenhäufigkeiten
   log2(length(Variable)) - sum(vec_freq * log2(vec_abs)) 
 }
 
+# Funktion berechnet die normierte Entropie eines Merkmals 
 # Siehe Skript WS22/23 Seite 73 Kap. 5.2
-#  Kommentar tbd 
-#
 normierte_Entropie<- function(Variable){
   absolute <-abs_Haeufigkeiten(Variable)
   vec_abs <- erzeuge_Vekor(absolute)
