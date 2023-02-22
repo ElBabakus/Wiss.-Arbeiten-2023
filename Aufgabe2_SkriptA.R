@@ -4,17 +4,17 @@
 # Wissenschaftliches Arbeiten.                                                 #
 # Skript A enthaelt folgende Funktionen:                                       #
 # (a) Eine Funktion, die verschiedene geeignete deskriptive Statistike         #
-#     für metrische Variablen berechnet und ausgibt                            #
+#     fÃ¼r metrische Variablen berechnet und ausgibt                            #
 # (b) Eine Funktion, die verschiedene geeignete deskriptive Statistiken        #
-#     für kategoriale Variablen berechnet und ausgibt                          #
-# (c) Eine Funktion, die geeignete deskriptive bivariate Statistiken für       #
+#     fÃ¼r kategoriale Variablen berechnet und ausgibt                          #
+# (c) Eine Funktion, die geeignete deskriptive bivariate Statistiken fÃ¼r       #
 #     den Zusammenhang zwischen zwei kategorialen Variablen                    #
 #     berechnet ausgibt                                                        #
-# (d) Eine Funktion, die geeignete deskriptive bivariate Statistiken für       #
+# (d) Eine Funktion, die geeignete deskriptive bivariate Statistiken fÃ¼r       #
 #     den Zusammengang zwischen einer metrischen und einer                     #
 #     dichotomen Variablen berechnet und ausgibt                               #
 # (e) Eine Funktion, die eine mindestens ordinal skalierte Variable            #
-#     quantilbasiert kategorisiert (z.B. in „niedrig“, „mittel“, „hoch“)       #
+#     quantilbasiert kategorisiert (z.B. in â€žniedrigâ€œ, â€žmittelâ€œ, â€žhochâ€œ)       #
 # (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier      #
 #     kategorialen Variablen erstellt                                          #
 # Freiwillig: weitere zur Deskription und Visualisierung geeignete             #
@@ -43,26 +43,83 @@ library(Rmisc )   # Konfidentintervall
 # 00b DATEN LADEN --------------------------------------------------------------
 # Einlesen der Daten (als data.frame)
 # TODO: relativen Pfad anlegen 
-daten <- read_csv(file = "\\Datensatz_Aufgabe1.csv")
+
+# daten <- read_csv(file = "\\Datensatz_Aufgabe1.csv")
+library(readr)
+
+# daten <- read_csv(file = "./Datensatz_Aufgabe1.csv")
+ Datensatz_Aufgabe1 <- read_delim("Datensatz_Aufgabe1.csv", 
+                                 delim = ";", escape_double = FALSE, trim_ws = TRUE)
+
+daten <- Datensatz_Aufgabe1
+Daten <- Datensatz_Aufgabe1
 
 
 # 01 DESKRIPTIVE STATISTIK - metr. Variablen -----------------------------------
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken         #
-# für metrische Variablen berechnet und ausgibt                                #
+# fÃ¼r metrische Variablen berechnet und ausgibt                                #
 
 
 
 
 # 02 DESKRIPTIVE STATISTIK - kategor. Variablen --------------------------------
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken            #
-# für kategoriale Variablen berechnet und ausgibt                              #
+# fÃ¼r kategoriale Variablen berechnet und ausgibt                              #
 
 
+# Funktion berechnet die absoluten HÃ¤ufigkeiten 
+# der jeweiligen AusprÃ¤gungen
+abs_Haeufigkeiten <- function(x){
+  table(x)
+}
 
+# Funktion berechnet die relativen HÃ¤ufigkeiten 
+# der jeweiligen AusprÃ¤gungen
+rel_Haeufigkeiten <- function(x){
+  prop.table(abs_Haeufigkeiten(x))
+}
 
+## Hilfsmethode um aus einer Variablen einen Vektor zu machen 
+erzeuge_Vekor<- function(input){
+   as.data.frame(input)[,2]
+ }
+
+# Funktion Berechnet den Modalwert zu einem Merkmal 
+# Es wird zunÃ¤chst der Vektor gegildet dann 
+# die AusprÃ¤gung mit dem GrÃ¶ÃŸten Vorkommen bestimmt und zurÃ¼ckgegeben
+berechne_modalwert <- function(x){
+  test <- abs_Haeufigkeiten(x)
+  names(test )[which.max(test)]
+}
+
+# Funktion berechnet die Entropie eines Merkmals 
+# Siehe Skript WS22/23 Seite 72 Kap. 5.2
+
+entropy <- function(Variable) {
+  # Berechne Absolute und relative HÃ¤ufigkeiten 
+  absolute <-abs_Haeufigkeiten(Variable)
+  freq <- rel_Haeufigkeiten(Variable)
+  vec_abs <- erzeuge_Vekor(absolute)
+  vec_freq <- erzeuge_Vekor(freq)
+  # entferne leere Felder auch null wegen der kommenden Log funktion 
+  vec_abs<-vec_abs[vec_abs>0]    
+  vec_freq<-vec_freq[vec_freq>0] 
+  
+  # berechne die Entropie als : 
+  # LOG von Anzahl_Objekte minus  Summe der gewichteten Log-Werte der Absoluten KlassenhÃ¤ufigkeiten
+  log2(length(Variable)) - sum(vec_freq * log2(vec_abs)) 
+}
+
+# Funktion berechnet die normierte Entropie eines Merkmals 
+# Siehe Skript WS22/23 Seite 73 Kap. 5.2
+normierte_Entropie<- function(Variable){
+  absolute <-abs_Haeufigkeiten(Variable)
+  vec_abs <- erzeuge_Vekor(absolute)
+  entropy(Variable)/log2(length(vec_abs))
+}
 
 # 03 DESKRIPTIVE BIV. STATISTIK - zwei kategor. Variablen ----------------------
-# Eine Funktion, die geeignete deskriptive bivariate Statistiken für           #
+# Eine Funktion, die geeignete deskriptive bivariate Statistiken fÃ¼r           #
 # den Zusammenhang zwischen zwei kategorialen Variablen                        #  
 # berechnet ausgibt                                                            #
 
@@ -105,7 +162,7 @@ chi2_function <- function(X,Y){
   
 }
 
-# deskriptive bivariate Statistiken f�r den Zusammenhang zwischen zwei kategorialen Variablen
+# deskriptive bivariate Statistiken für den Zusammenhang zwischen zwei kategorialen Variablen
 # Matheinteresse und Programmierinteresse mit Kontingenztafel:
 f <- function(){
   A <- matrix(0,7,7)
@@ -120,7 +177,7 @@ mosaicplot(A, xlab = "Programmierinteresse", ylab = "Matheinteresse", main = "")
 
 
 # 04 DESKRIPTIVE BIV. STATISTIK - metr. & dichot. Variable ---------------------
-#  Eine Funktion, die geeignete deskriptive bivariate Statistiken für          #
+#  Eine Funktion, die geeignete deskriptive bivariate Statistiken fÃ¼r          #
 # den Zusammengang zwischen einer metrischen und einer                         #
 # dichotomen Variablen berechnet und ausgibt                                   #
 
@@ -129,7 +186,7 @@ mosaicplot(A, xlab = "Programmierinteresse", ylab = "Matheinteresse", main = "")
 
 # 05 KATRGORISIEREN ORD. SKAL. VARIABLE ----------------------------------------
 # Eine Funktion, die eine mindestens ordinal skalierte Variable                #
-# quantilbasiert kategorisiert (z.B. in „niedrig“, „mittel“, „hoch“)           #
+# quantilbasiert kategorisiert (z.B. in â€žniedrigâ€œ, â€žmittelâ€œ, â€žhochâ€œ)           #
 
 
 
