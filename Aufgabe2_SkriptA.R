@@ -48,7 +48,106 @@ daten <- read_csv(file = "\\Datensatz_Aufgabe1.csv")
 
 # 01 DESKRIPTIVE STATISTIK - metr. Variablen -----------------------------------
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken         #
-# für metrische Variablen berechnet und ausgibt                                #
+# fÃ¼r metrische Variablen berechnet und ausgibt                                #
+calculate_metrParam <- function(daten){
+  cal_mean <- calculate_mean(daten$Alter)       # arithm Mittel
+  cal_med <- calculate_median(daten$Alter)      # Median
+  cal_max <- calculate_max(daten$Alter)         # Maximum
+  cal_min <- calculate_min(daten$Alter)         # Minimum
+  cal_fristQ <- calculate_firstQ(daten$Alter)   # Erstes Quartil
+  cal_thirdQ <- calculate_thirdQ(daten$Alter)   # Drittes Quartil
+  cal_mod <- calculate_mod(daten$Alter)         # Modalwert
+  cal_range <- calculate_range(daten$Alter)     # Spannweite
+  cal_irq <- calculate_iqr(daten$Alter)         # Interquartilsabstand
+  cal_mad <- calculate_mad(daten$Alter)         # Mean Absolute Deviation
+  cal_var <- calculate_var(daten$Alter)         # Varianz
+  cal_sd <- calculate_sd(daten$Alter)           # Standardabweichung
+  
+  # Erzeugen einer Liste, die dann ausgegeben werden soll
+  result <- list(mean = cal_mean, 
+                 med = cal_med, 
+                 max = cal_max, 
+                 min = cal_min, 
+                 firstQuartil = cal_fristQ,
+                 thirdQuartil = cal_thirdQ, 
+                 modal = cal_mod, 
+                 range = cal_range, 
+                 irq = cal_irq, 
+                 mad = cal_mad,
+                 varianz = cal_var, 
+                 sdt = cal_sd)
+  
+  
+  # Ausgabe aller Ergebnisse dieser Funktion als Liste
+  return(result)
+  
+}
+
+# Aufruf und Ausgabe der Funktion calculate_metrParam
+ergebnis <- calculate_metrParam(daten)
+print(ergebnis)
+
+# 01b UNTERFUNKTIONEN ----------------------------------------------------------
+# Arithmetisches Mittel
+calculate_mean <-function(x){
+  mean(x)
+}
+
+# Median
+calculate_median <- function(x){
+  median(x)
+}
+
+# Maximum
+calculate_max <- function(x){
+  max(x)
+}
+
+# Minimum
+calculate_min <- function(x){
+  min(x)
+}
+
+# 1. Qartil
+calculate_firstQ <- function(x){
+  quantile(x, 0.25)
+}
+
+# 3. Quartil
+calculate_thirdQ <- function(x){
+  quantile(x, 0.75)
+}
+
+# Modalwert
+calculate_mod <- function(x){
+  names(x)[which.max(x)]
+}
+
+# Spannweite
+calculate_range <- function(x){
+  range(x)
+}
+
+# Interquartilsabstand
+calculate_iqr <- function(x){
+  IQR(x)
+}
+
+# Mean Absolute Devaition
+calculate_mad <- function(x){
+  mad(x)
+}
+
+# Varianz
+calculate_var <- function(x){
+  var(x)
+}
+
+# Standardabweichung
+calculate_sd <- function(x){
+  sd(x)
+}
+
 
 
 
@@ -66,7 +165,7 @@ daten <- read_csv(file = "\\Datensatz_Aufgabe1.csv")
 # den Zusammenhang zwischen zwei kategorialen Variablen                        #  
 # berechnet ausgibt                                                            #
 
-# deskriptive bivariate Statistiken f�r den Zusammenhang zwischen zwei kategorialen Variablen
+# deskriptive bivariate Statistiken f�r den Zusammenhang zwischen zwei kategorialen Variablen
 # Matheinteresse und Programmierinteresse mit Kontingenztafel:
 f <- function(){
   A <- matrix(0,7,7)
