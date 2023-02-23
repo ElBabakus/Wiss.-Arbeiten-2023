@@ -38,11 +38,24 @@ library(qqplotr)  # Ergaenzung zu qq Plot
 library(svglite)
 library(ggpmisc)  # Minima und Maxima finden
 library(Rmisc )   # Konfidentintervall
+library(tibble)   # Datenstruktur
 
 
-# 00b DATEN LADEN --------------------------------------------------------------
+# 00b EINBINDEN DES R-HELPER-SKRIPTES ------------------------------------------
+# Dieses Skript enthaelt Helferfunktionen. Folgende Funktionen sind enthalten: #
+# Funktion 1: Abfrage und ggf Umwandlung Dataframe                             #
+# Funktion 2: Umwandlung von Variablen in numerische Variablen                 #
+
+# Ladend des Helfer-Skriptes
+source("./Aufgabe2_RHelperSkript.R")
+
+# 00c DATEN LADEN --------------------------------------------------------------
 # Einlesen der Daten (als data.frame)
-daten <- read_csv(file = "./Datensatz_Aufgabe1.csv")
+daten <- read.csv2(file = "./Datensatz_Aufgabe1.csv")
+
+# Umwandlung in Data Frame, mittels Funktion aus R-Helper-Skript, falls nicht 
+# schon Data Frame
+CheckDataFrame(daten)
 
 
 # 01 DESKRIPTIVE STATISTIK - metr. Variablen -----------------------------------
@@ -55,19 +68,42 @@ daten <- read_csv(file = "./Datensatz_Aufgabe1.csv")
 # Hauptfunktion beinhaltet: min, max, median, arothm. Mittel, 1 & 3-Quartil,   
 # Modalwert, Spannweite, IQR, MAD, Varianz, SD
 calculate_metrParam <- function(daten){
-  calculate_mean(daten$Alter)     # arithm Mittel
-  calculate_median(daten$Alter)   # Median
-  calculate_max(daten$Alter)      # Maximum
-  calculate_min(daten$Alter)      # Minimum
-  calculate_firstQ(daten$Alter)   # Erstes Quartil
-  calculate_thirdQ(daten$Alter)   # Drittes Quartil
-  calculate_mod(daten$Alter)      # Modalwert
-  calculate_range(daten$Alter)    # Spannweite
-  calculate_iqr(daten$Alter)      # Interquartilsabstand
-  calculate_mad(daten$Alter)      # Mean Absolute Deviation
-  calculate_var(daten$Alter)      # Varianz
-  calculate_sd(daten$Alter)       # Standardabweichung
+  cal_mean <- calculate_mean(daten$Alter)       # arithm Mittel
+  cal_med <- calculate_median(daten$Alter)      # Median
+  cal_max <- calculate_max(daten$Alter)         # Maximum
+  cal_min <- calculate_min(daten$Alter)         # Minimum
+  cal_fristQ <- calculate_firstQ(daten$Alter)   # Erstes Quartil
+  cal_thirdQ <- calculate_thirdQ(daten$Alter)   # Drittes Quartil
+  cal_mod <- calculate_mod(daten$Alter)         # Modalwert
+  cal_range <- calculate_range(daten$Alter)     # Spannweite
+  cal_irq <- calculate_iqr(daten$Alter)         # Interquartilsabstand
+  cal_mad <- calculate_mad(daten$Alter)         # Mean Absolute Deviation
+  cal_var <- calculate_var(daten$Alter)         # Varianz
+  cal_sd <- calculate_sd(daten$Alter)           # Standardabweichung
+  
+  # Erzeugen einer Liste, die dann ausgegeben werden soll
+  result <- list(mean = cal_mean, 
+                 med = cal_med, 
+                 max = cal_max, 
+                 min = cal_min, 
+                 firstQuartil = cal_fristQ,
+                 thirdQuartil = cal_thirdQ, 
+                 modal = cal_mod, 
+                 range = cal_range, 
+                 irq = cal_irq, 
+                 mad = cal_mad,
+                 varianz = cal_var, 
+                 sdt = cal_sd)
+  
+  
+  # Ausgabe aller Ergebnisse dieser Funktion als Liste
+  return(result)
+  
 }
+
+# Aufruf und Ausgabe der Funktion calculate_metrParam
+ergebnis <- calculate_metrParam(daten)
+print(ergebnis)
 
 # 01b UNTERFUNKTIONEN ----------------------------------------------------------
 # Arithmetisches Mittel
