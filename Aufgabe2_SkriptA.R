@@ -175,6 +175,13 @@ A <- f()
 mosaicplot(A, xlab = "Programmierinteresse", ylab = "Matheinteresse", main = "")
 
 
+# Funktion erzeugt für zwei übergebene Variablen 
+# eine Kontingenztafel : eine Zelle der Tabelle enthält 
+# die Anzahl wie häufig eine Kombination der Ausprägungen gemeinsam vorkommt
+Kreuztabelle <-function(variable1, variable2){
+  test <- table(variable1,variable2)
+  return(test)
+} 
 
 # 04 DESKRIPTIVE BIV. STATISTIK - metr. & dichot. Variable ---------------------
 #  Eine Funktion, die geeignete deskriptive bivariate Statistiken fÃ¼r          #
