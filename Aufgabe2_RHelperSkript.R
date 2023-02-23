@@ -74,6 +74,10 @@ convert_ToNum <- function(x){
 
 
 
+#04  Hilfsmethode um aus einer Variable einen Vektor zu machen 
+erzeuge_Vekor<- function(input){
+   as.data.frame(input)[,2]
+ }
 
 
 
