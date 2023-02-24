@@ -69,7 +69,12 @@ convert_ToNum <- function(x){
 
 # 03 FUNKTION - Umwandlung in dichotome Variablen ------------------------------
 
-
+convert_dichotom <- function(input, merkmal){
+  factor(ifelse(input == merkmal,"ja", "nein"))
+}
+  # Einfache ifelse Abfrage, ob Merkmal des Inputs TRUE/FALSE ist und Änderung
+  # in ja/nein. 
+  # Bsp.: input = Daten$Studienfach, merkmal = "Statistik"
 
 
 
@@ -81,4 +86,24 @@ erzeuge_Vekor<- function(input){
 
 
 
-#
+#05 Umcodierung der Studienfaecher in numerische Variablen
+
+convert_StudyToNum <- function(input){
+  x <- factor(input)
+  y <- as.numeric(x)
+  z <- (levels(x))
+  list <- list("Umcodierte Daten" = y, "Legende" = z)
+  return(list)
+}
+
+  # Es wird zunaechst der Datensatz, welcher als "chr" vorliegt, faktorisiert
+  # Dadurch kann er in Numerische Werte ueberfuehrt werden, welche durch die
+  # alphabetische Reihenfolge nummeriert werden.
+  # Hierzu wurden zusaetzlich die Levels ausgegeben, welche als Legende dienen.
+
+
+#06 Umcodierung des Mathe LK in numerische Variablen
+convert_LKToNum <- function(input){
+  return(as.numeric(input=="ja"))
+}
+  # Funktioniert auch mit jeder anderen dichotomen Variable.
