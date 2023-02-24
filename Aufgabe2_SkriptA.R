@@ -195,6 +195,23 @@ Kreuztabelle <-function(variable1, variable2){
 # Eine Funktion, die eine mindestens ordinal skalierte Variable                #
 # quantilbasiert kategorisiert (z.B. in â€žniedrigâ€œ, â€žmittelâ€œ, â€žhochâ€œ)           #
 
+categorize <- function(variable){
+  if(is.numeric(variable)) # Abfrage ob eigegebene Variable numerisch ist
+  {
+    variable_sorted <- sort(variable) # gewählte Variable wird sortiert
+    rbind(quantile(variable_sorted,
+                   probs = seq(0, 1, 1/3), names = FALSE), c("erster Wert",
+                                                            "kleinstes Drittel",
+                                                            "mittleres Drittel",
+                                                            "höchstes Drittel"))
+    # Erzeuge Matrix welche die Quantilwerte in drittel schritten ausgibt.
+    # Schrittgröße is auf 1/3 festgesetzt damit es Übersichtlich bleibt.
+  }
+  else{
+    return("Variable is not ordinal scaled") 
+    # Fehlermeldung bei nicht numerischer Eingabe
+  }
+}
 
 
 
