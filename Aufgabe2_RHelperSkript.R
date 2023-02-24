@@ -66,6 +66,30 @@ convert_ToNum <- function(x){
     
 }
 
+convert_ToNum2 <- function(input){
+  # Ueberpruefung, ob schon numerische Variable
+  if(is.numeric(input)){
+    return(input);                        # Wenn schon num. Variablen, dann diese zurueckgeben
+  } else if(is.character(input)){       
+    # Es wird zunaechst der Datensatz, welcher als "chr" vorliegt, faktorisiert
+    # Dadurch kann er in Numerische Werte ueberfuehrt werden, welche durch die
+    # alphabetische Reihenfolge nummeriert werden.
+    # Hierzu wurden zusaetzlich die Levels ausgegeben, welche als Legende dienen.
+    x <- factor(input)
+    y <- as.numeric(x)
+    z <- (levels(x))
+    list <- list("Umcodierte Daten" = y, "Legende" = z)
+    return(list);                      
+  } else if(length(unique(input)) == 2){  # Ueberpruefung, ob dichotom
+    # Funktioniert auch mit jeder anderen dichotomen Variable.
+    return(as.numeric(input=="ja"));
+  } else{
+    x <- as.numeric(input);               # Umwandlung in num. Variablen
+    return(x);                            # Rueckgabe d. num. Variablen
+  }
+  
+}
+
 
 # 03 FUNKTION - Umwandlung in dichotome Variablen ------------------------------
 
