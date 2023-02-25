@@ -183,6 +183,23 @@ Kreuztabelle <-function(variable1, variable2){
   return(test)
 } 
 
+# Funktion liefert die Verteilung der Veriable2 bei gegebenen (fixierter) Ausprägung der Variable1 
+# Die Ausprägung des dritten  Parameters ZeileAuspraegung ist in Hochkomata "" zu setzen
+# Beispiel : KreuzTabelle_ZeilenAuspraegungFixiert(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$Programmierinteresse,"informatik")
+#            liefert die Verteilung des Programmierinteresse bei fixiertem Studiengang = "Informatik"  
+KreuzTabelle_ZeilenAuspraegungFixiert <- function(variable1,variable2,ZeileAuspraegung){
+  test <- table(variable1,variable2)
+  return(test[ZeileAuspraegung,])
+}
+# Funktion liefert die Verteilung der Veriable1 bei gegebenen (fixierter) Ausprägung der Variable2 
+# Die Ausprägung des dritten  Parameters SpaltenAuspraegung ist in Hochkomata "" zu setzen
+# Beispiel : KreuzTabelle_ZeilenAuspraegungFixiert(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$Programmierinteresse,"informatik")
+#            liefert die Verteilung des Programmierinteresse bei fixiertem Studiengang = "Informatik"
+KreuzTabelle_SpaltenAupPraegungFixiert <- function(variable1,variable2,SpaltenAuspraegung){
+  test <- table(variable1,variable2)
+  return(test[,SpaltenAuspraegung])
+}
+
 # 04 DESKRIPTIVE BIV. STATISTIK - metr. & dichot. Variable ---------------------
 #  Eine Funktion, die geeignete deskriptive bivariate Statistiken fÃ¼r          #
 # den Zusammengang zwischen einer metrischen und einer                         #
