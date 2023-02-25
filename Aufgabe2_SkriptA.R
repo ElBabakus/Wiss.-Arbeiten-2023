@@ -79,11 +79,6 @@ rel_Haeufigkeiten <- function(x){
   prop.table(abs_Haeufigkeiten(x))
 }
 
-## Hilfsmethode um aus einer Variablen einen Vektor zu machen 
-erzeuge_Vekor<- function(input){
-   as.data.frame(input)[,2]
- }
-
 # Funktion Berechnet den Modalwert zu einem Merkmal 
 # Es wird zunÃ¤chst der Vektor gegildet dann 
 # die AusprÃ¤gung mit dem GrÃ¶ÃŸten Vorkommen bestimmt und zurÃ¼ckgegeben
@@ -191,6 +186,7 @@ KreuzTabelle_ZeilenAuspraegungFixiert <- function(variable1,variable2,ZeileAuspr
   test <- table(variable1,variable2)
   return(test[ZeileAuspraegung,])
 }
+
 # Funktion liefert die Verteilung der Veriable1 bei gegebenen (fixierter) Ausprägung der Variable2 
 # Die Ausprägung des dritten  Parameters SpaltenAuspraegung ist in Hochkomata "" zu setzen
 # Beispiel : KreuzTabelle_ZeilenAuspraegungFixiert(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$Programmierinteresse,"informatik")
