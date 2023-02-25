@@ -96,7 +96,7 @@ convert_ToNum2 <- function(input){
 convert_dichotom <- function(input, merkmal){
   factor(ifelse(input == merkmal,"ja", "nein"))
 }
-  # Einfache ifelse Abfrage, ob Merkmal des Inputs TRUE/FALSE ist und Änderung
+  # Einfache ifelse Abfrage, ob Merkmal des Inputs TRUE/FALSE ist und ?nderung
   # in ja/nein. 
   # Bsp.: input = Daten$Studienfach, merkmal = "Statistik"
 
@@ -131,3 +131,12 @@ convert_LKToNum <- function(input){
   return(as.numeric(input=="ja"))
 }
   # Funktioniert auch mit jeder anderen dichotomen Variable.
+
+
+lade_Datensatz<- function(Dateiname,delimeter){
+  Datensatz_Aufgabe1 <- read_delim(Dateiname,delim = ";", escape_double = FALSE, trim_ws = TRUE)
+}
+
+speichere_Datensatz<- function(Dateiname,Datensatz){
+  write.csv2(Datensatz, Dateiname)
+}
