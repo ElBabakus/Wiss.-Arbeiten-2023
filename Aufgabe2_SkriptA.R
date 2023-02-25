@@ -14,7 +14,7 @@
 #     den Zusammengang zwischen einer metrischen und einer                     #
 #     dichotomen Variablen berechnet und ausgibt                               #
 # (e) Eine Funktion, die eine mindestens ordinal skalierte Variable            #
-#     quantilbasiert kategorisiert (z.B. in niedrig, mittel, hoch�)            #
+#     quantilbasiert kategorisiert (z.B. in niedrig, mittel, hoch?)            #
 # (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier      #
 #     kategorialen Variablen erstellt                                          #
 # Freiwillig: weitere zur Deskription und Visualisierung geeignete             #
@@ -145,7 +145,7 @@ calculate_sd <- function(x){
 # den Zusammenhang zwischen zwei kategorialen Variablen                        #  
 # berechnet ausgibt                                                            #
 
-# deskriptive bivariate Statistiken f�r den Zusammenhang zwischen zwei kategorialen Variablen
+# deskriptive bivariate Statistiken f?r den Zusammenhang zwischen zwei kategorialen Variablen
 # Matheinteresse und Programmierinteresse mit Kontingenztafel:
 f <- function(){
   A <- matrix(0,7,7)
@@ -164,6 +164,20 @@ mosaicplot(A, xlab = "Programmierinteresse", ylab = "Matheinteresse", main = "")
 # den Zusammengang zwischen einer metrischen und einer                         #
 # dichotomen Variablen berechnet und ausgibt                                   #
 
+
+# Funktion berechnet die Stärke des Zusammenhangs zwischen einer 
+# dichotomen und metrischen variable. 
+# die erste übergebene Variable ist diejenige welche ggfs zu diochotom gewandelt werden muss. 
+# Paramter zwei ist die dichotomrelevante Ausprägung zur ersten Variable 
+# Parameter drei ist die metrische Variable für zur korrelation 
+# als Korrelationsfunktion aus R wir Cor() aufgerufen. 
+# da method nicht gesezt wird , berechnet die cor funktion den Korrelationskoeffizienten nach Pearson
+
+punktbiserale_Korrelation <- function(VariableZuDichotom,DichotomRelevanteAuspraegung,metrischeVariable){
+  jaNeinKodierung <- convert_dichotom(VariableZuDichotom,DichotomRelevanteAuspraegung)
+  KodierungAlsNullEins <- convert_LKToNum(jaNeinKodierung)
+  cor(KodierungAlsNullEins,metrischeVariable)
+}
 
 
 
