@@ -301,6 +301,19 @@ KreuzTabelle_SpaltenAupPraegungFixiert <- function(variable1,variable2,SpaltenAu
 # den Zusammengang zwischen einer metrischen und einer                         #
 # dichotomen Variablen berechnet und ausgibt                                   #
 
+# Funktion berechnet die Stärke des Zusammenhangs zwischen einer 
+# dichotomen und metrischen variable. 
+# die erste übergebene Variable ist diejenige welche ggfs zu diochotom gewandelt werden muss. 
+# Paramter zwei ist die dichotomrelevante Ausprägung zur ersten Variable 
+# Parameter drei ist die metrische Variable für zur korrelation 
+# als Korrelationsfunktion aus R wir Cor() aufgerufen. 
+# da method nicht gesezt wird , berechnet die cor funktion den Korrelationskoeffizienten nach Pearson
+
+punktbiserale_Korrelation <- function(VariableZuDichotom,DichotomRelevanteAuspraegung,metrischeVariable){
+  jaNeinKodierung <- convert_dichotom(VariableZuDichotom,DichotomRelevanteAuspraegung)
+  KodierungAlsNullEins <- convert_LKToNum(jaNeinKodierung)
+  cor(KodierungAlsNullEins,metrischeVariable)
+}
 
 
 
