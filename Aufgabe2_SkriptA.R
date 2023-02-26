@@ -56,13 +56,10 @@ Daten <- Datensatz_Aufgabe1
 
 
 # 01 DESKRIPTIVE STATISTIK - metr. Variablen -----------------------------------
-# Eine Funktion, die verschiedene geeignete deskriptive Statistiken         #
-# fÃ¼r metrische Variablen berechnet und ausgibt                                #
+# Eine Funktion, die verschiedene geeignete deskriptive Statistiken            #
+# fuer metrische Variablen berechnet und ausgibt                               #
 
-
-
-
-# 01b UNTERFUNKTIONEN ----------------------------------------------------------
+# 01a UNTERFUNKTIONEN ----------------------------------------------------------
 # Arithmetisches Mittel
 calculate_mean <-function(x){
   mean(x)
@@ -95,7 +92,8 @@ calculate_thirdQ <- function(x){
 
 # Modalwert
 calculate_mod <- function(x){
-  names(x)[which.max(x)]
+  modal <- unique(x)
+  modal[which.max(tabulate(match(x, modal)))]
 }
 
 # Spannweite
@@ -123,7 +121,7 @@ calculate_sd <- function(x){
   sd(x)
 }
 
-
+# 01b HAUPTFUNKTION ------------------------------------------------------------
 calculate_metrParam <- function(daten){
   cal_mean <- calculate_mean(daten$Alter)       # arithm Mittel
   cal_med <- calculate_median(daten$Alter)      # Median
@@ -159,12 +157,12 @@ calculate_metrParam <- function(daten){
 }
 
 # Aufruf und Ausgabe der Funktion calculate_metrParam
-ergebnis <- calculate_metrParam(daten)
-print(ergebnis)
+metrParam <- calculate_metrParam(daten)
+print(metrParam)
 
 # 02 DESKRIPTIVE STATISTIK - kategor. Variablen --------------------------------
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken            #
-# fÃ¼r kategoriale Variablen berechnet und ausgibt                              #
+# fuer kategoriale Variablen berechnet und ausgibt                             #
 
 
 # Funktion berechnet die absoluten HÃ¤ufigkeiten 
