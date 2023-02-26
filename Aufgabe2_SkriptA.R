@@ -159,9 +159,9 @@ calculate_metrParam <- function(daten){
 }
 
 # Aufruf und Ausgabe der Funktion calculate_metrParam
+metrParam <- calculate_metrParam(daten)
+print(metrParam)
 
-#ergebnis <- calculate_metrParam(daten)
-#print(ergebnis)
 
 # 02 DESKRIPTIVE STATISTIK - kategor. Variablen --------------------------------
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken            #
@@ -299,6 +299,19 @@ KreuzTabelle_SpaltenAupPraegungFixiert <- function(variable1,variable2,SpaltenAu
 # den Zusammengang zwischen einer metrischen und einer                         #
 # dichotomen Variablen berechnet und ausgibt                                   #
 
+# Funktion berechnet die Stärke des Zusammenhangs zwischen einer 
+# dichotomen und metrischen variable. 
+# die erste übergebene Variable ist diejenige welche ggfs zu diochotom gewandelt werden muss. 
+# Paramter zwei ist die dichotomrelevante Ausprägung zur ersten Variable 
+# Parameter drei ist die metrische Variable für zur korrelation 
+# als Korrelationsfunktion aus R wir Cor() aufgerufen. 
+# da method nicht gesezt wird , berechnet die cor funktion den Korrelationskoeffizienten nach Pearson
+
+punktbiserale_Korrelation <- function(VariableZuDichotom,DichotomRelevanteAuspraegung,metrischeVariable){
+  jaNeinKodierung <- convert_dichotom(VariableZuDichotom,DichotomRelevanteAuspraegung)
+  KodierungAlsNullEins <- convert_LKToNum(jaNeinKodierung)
+  cor(KodierungAlsNullEins,metrischeVariable)
+}
 
 
 
@@ -330,6 +343,10 @@ categorize <- function(variable){
 # Eine Funktion, die eine geeignete Visualisierung von drei oder vier          #
 # kategorialen Variablen erstellt                                              #
 
+visualisiere3Variablen <- function(variableX,VariableY,KachelnErzeugendeVariable){
+  test<-data.frame(ersteVariable=variableX,zweiteVariable=VariableY,dritteVariable=KachelnErzeugendeVariable)
+  ggplot(test,aes(x=ersteVariable,y=zweiteVariable)) + geom_point()  + facet_wrap(~dritteVariable)
+}
 
 
 
