@@ -343,6 +343,9 @@ categorize <- function(variable){
 # Eine Funktion, die eine geeignete Visualisierung von drei oder vier          #
 # kategorialen Variablen erstellt                                              #
 
+# Funktion Plotet scatterplots von den ersten beiden Parametern VariableX und VariableY 
+# die Anzahl der Plots wird vom dritten Parameter bestimmt. 
+# für jede Auspräung des dritten Parameters wird ein plot  der ersten beiden variablen gezeichnet. 
 visualisiere3Variablen <- function(variableX,VariableY,KachelnErzeugendeVariable){
   test<-data.frame(ersteVariable=variableX,zweiteVariable=VariableY,dritteVariable=KachelnErzeugendeVariable)
   ggplot(test,aes(x=ersteVariable,y=zweiteVariable)) + geom_point()  + facet_wrap(~dritteVariable)
