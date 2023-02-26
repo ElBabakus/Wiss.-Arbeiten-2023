@@ -155,17 +155,16 @@ gebeAus("Normierte Entropie der Variable Studienfach: ",normierte_Entropie(Daten
 
 
 ######################### Bivariate Betachtung der Variablen #####################
-
+print######################## Bivariate Betachtung der Variablen #####################")
 print("Kontingenztafel zu Studienfach und Matheinteresse")
 print(Kreuztabelle(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$Matheinteresse))
 print(chi2_function(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$Matheinteresse))
-print("Kontingenztafel zu Studienfach und Programmierinteresse")
+print("-------------Kontingenztafel zu Studienfach und Programmierinteresse-------------")
 print(Kreuztabelle(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$Programmierinteresse))
 print(chi2_function(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$Programmierinteresse))
-print("Kontingenztafel zu Studienfach und MatheLK")
+print("-------------Kontingenztafel zu Studienfach und MatheLK-------------")
 print(Kreuztabelle(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$MatheLK))
 print(chi2_function(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$MatheLK))
-
 print("-------------------------------------------")
 
 
@@ -183,7 +182,7 @@ boxplot(Datensatz_Aufgabe1$Alter)
 p <- ggplot(daten, aes(x = daten$Studienfach, y = daten$Alter)) + geom_violin(trim=FALSE)
 # Median und Range mit hinzufuegen (Nutzung der Funktion data_summary)
 p + stat_summary(fun.data=data_summary, geom="pointrange")
-
+print(p)
 
 
 print("-------------------------------------------")

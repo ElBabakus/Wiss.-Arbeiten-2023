@@ -289,7 +289,7 @@ KreuzTabelle_ZeilenAuspraegungFixiert <- function(variable1,variable2,ZeileAuspr
 # Die Ausprägung des dritten  Parameters SpaltenAuspraegung ist in Hochkomata "" zu setzen
 # Beispiel : KreuzTabelle_ZeilenAuspraegungFixiert(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$Programmierinteresse,"informatik")
 #            liefert die Verteilung des Programmierinteresse bei fixiertem Studiengang = "Informatik"
-KreuzTabelle_SpaltenAupPraegungFixiert <- function(variable1,variable2,SpaltenAuspraegung){
+KreuzTabelle_SpaltenAuspraegungFixiert <- function(variable1,variable2,SpaltenAuspraegung){
   test <- table(variable1,variable2)
   return(test[,SpaltenAuspraegung])
 }
