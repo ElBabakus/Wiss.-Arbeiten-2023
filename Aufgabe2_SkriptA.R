@@ -317,7 +317,7 @@ punktbiserale_Korrelation <- function(VariableZuDichotom,DichotomRelevanteAuspra
 
 # 05 KATRGORISIEREN ORD. SKAL. VARIABLE ----------------------------------------
 # Eine Funktion, die eine mindestens ordinal skalierte Variable                #
-# quantilbasiert kategorisiert (z.B. in â€žniedrigâ€œ, â€žmittelâ€œ, â€žhochâ€œ)           #
+# quantilbasiert kategorisiert (z.B. in 'niedrig' , 'mittel', 'hoch')           #
 
 categorize <- function(variable){
   if(is.numeric(variable)) # Abfrage ob eigegebene Variable numerisch ist
