@@ -211,7 +211,7 @@ entropie <- function(Variable) {
 normierte_Entropie<- function(Variable){
   absolute <-abs_Haeufigkeiten(Variable)
   vec_abs <- erzeuge_Vekor(absolute)
-  entropy(Variable)/log2(length(vec_abs))
+  entropie(Variable)/log2(length(vec_abs))
 }
 
 # 03 DESKRIPTIVE BIV. STATISTIK - zwei kategor. Variablen ----------------------
@@ -333,7 +333,7 @@ categorize <- function(variable){
 
 
 
-# 07 DESKRIPT. & VISULAISIERUNG - Freiwilli ------------------------------------
+# 07 DESKRIPT. & VISULAISIERUNG - Freiwillig ------------------------------------
 # Freiwillig: weitere zur Deskription und Visualisierung geeignete             #
 # Funktionen                                                                   #
 #
@@ -341,12 +341,5 @@ erzeuge_Mosaicplot<-function(){
   A <- f()
   mosaicplot(A, xlab = "Programmierinteresse", ylab = "Matheinteresse", main = "")  
 }
-
-
-
-
-
-
-
 
 #
