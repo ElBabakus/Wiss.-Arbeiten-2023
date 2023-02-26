@@ -187,7 +187,11 @@ p + stat_summary(fun.data=data_summary, geom="pointrange")
 
 
 print("-------------------------------------------")
-print("Visualisierung der bivariater Zusammenhänge ? ") 
+print("Visualisierung von 3 Variablen in einer Graphik")
+testplot <- visualisiere3Variablen(Datensatz_Aufgabe1$Programmierinteresse,Datensatz_Aufgabe1$Matheinteresse,"Programmieren","MatheInteresse",Datensatz_Aufgabe1$Studienfach)
+plot(testplot)
+print("-------------------------------------------")
+
 
 
 
