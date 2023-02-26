@@ -43,7 +43,7 @@ library(Rmisc )   # Konfidentintervall
 # 00b DATEN LADEN --------------------------------------------------------------
 # Einlesen der Daten (als data.frame)
 # TODO: relativen Pfad anlegen 
-
+source("Aufgabe2_RHelperSkript.R")
 # daten <- read_csv(file = "\\Datensatz_Aufgabe1.csv")
 library(readr)
 
