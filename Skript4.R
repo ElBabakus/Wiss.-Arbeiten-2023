@@ -32,23 +32,28 @@ library(tibble)   # Datenstruktur
 # Funktion 1: Abfrage und ggf Umwandlung Dataframe                             #
 # Funktion 2: Umwandlung von Variablen in numerische Variablen                 #
 
-# Ladend des Helfer-Skriptes
-source("./Aufgabe2_RHelperSkript.R")
+# Laden des Helfer-Skriptes
 
-# Ladend des Skriptes-A
+
+# Laden des Skriptes-A
 source("./Aufgabe2_SkriptA.R")
 
 # 00b DATEN LADEN --------------------------------------------------------------
 # Einlesen der Daten (als data.frame)
 daten <- read.csv2(file = "./Datensatz_Aufgabe1.csv")
-
+Datensatz_Aufgabe1 <- lade_Datensatz("Datensatz_Aufgabe1.csv", delim = ";")
 # Ueberpruefen, ob Daten als DataFrame vorliegen, und wenn nicht Umwandlung in ein
 # solches mit Hilde einer FUnktion aus dem R-Helper-Skript
-CheckDataFrame(daten)
+'CheckDataFrame(daten)
 
 
 
 # 01 DESKRIPTION DER DATEN -----------------------------------------------------
+
+# Betrachtung der Variable Alter 
+ 
+print("Lageparameter")
+#calculate_metrParam()
 
 
 # 02 VISUALISIERUNG DER DATEN --------------------------------------------------
