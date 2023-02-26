@@ -347,9 +347,13 @@ categorize <- function(variable){
 # Funktion plotet scatterplots von den ersten beiden Parametern VariableX und VariableY 
 # die Anzahl der Plots wird vom dritten Parameter bestimmt. 
 # für jede Auspräung des dritten Parameters wird ein plot  der ersten beiden variablen gezeichnet. 
-visualisiere3Variablen <- function(variableX,VariableY,KachelnErzeugendeVariable){
+visualisiere3Variablen <- function(variableX,VariableY,variableXnAme,VariableYname,KachelnErzeugendeVariable){
+  ggtitle("label")
   test<-data.frame(ersteVariable=variableX,zweiteVariable=VariableY,dritteVariable=KachelnErzeugendeVariable)
-  ggplot(test,aes(x=ersteVariable,y=zweiteVariable)) + geom_point()  + facet_wrap(~dritteVariable)
+  testplot <-(ggplot(test,aes(x=ersteVariable,y=zweiteVariable)) + geom_point()  + facet_wrap(~dritteVariable))
+  testplot$labels$x=variableXnAme
+  testplot$labels$y=VariableYname
+  return(testplot)
 }
 
 
