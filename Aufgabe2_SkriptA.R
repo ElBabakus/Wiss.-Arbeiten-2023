@@ -159,9 +159,9 @@ calculate_metrParam <- function(daten){
 }
 
 # Aufruf und Ausgabe der Funktion calculate_metrParam
+metrParam <- calculate_metrParam(daten)
+print(metrParam)
 
-#ergebnis <- calculate_metrParam(daten)
-#print(ergebnis)
 
 # 02 DESKRIPTIVE STATISTIK - kategor. Variablen --------------------------------
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken            #
@@ -299,12 +299,25 @@ KreuzTabelle_SpaltenAupPraegungFixiert <- function(variable1,variable2,SpaltenAu
 # den Zusammengang zwischen einer metrischen und einer                         #
 # dichotomen Variablen berechnet und ausgibt                                   #
 
+# Funktion berechnet die Stärke des Zusammenhangs zwischen einer 
+# dichotomen und metrischen variable. 
+# der erste übergebene Parameter ist derjenige welcher ggfs. diochotom gewandelt werden muss. 
+# Paramter zwei ist die dichotomrelevante Ausprägung zur ersten Variable 
+# Parameter drei ist die metrische Variable für die Korrelationsrechnung 
+# als Korrelationsfunktion aus R wir Cor() aufgerufen. 
+# da der Parameter "method" nicht gesezt wird , berechnet die interne cor()-Funktion den Korrelationskoeffizienten nach Pearson
+
+punktbiserale_Korrelation <- function(VariableZuDichotom,DichotomRelevanteAuspraegung,metrischeVariable){
+  jaNeinKodierung <- convert_dichotom(VariableZuDichotom,DichotomRelevanteAuspraegung) 
+  KodierungAlsNullEins <- convert_LKToNum(jaNeinKodierung)
+  cor(KodierungAlsNullEins,metrischeVariable)
+}
 
 
 
 # 05 KATRGORISIEREN ORD. SKAL. VARIABLE ----------------------------------------
 # Eine Funktion, die eine mindestens ordinal skalierte Variable                #
-# quantilbasiert kategorisiert (z.B. in â€žniedrigâ€œ, â€žmittelâ€œ, â€žhochâ€œ)           #
+# quantilbasiert kategorisiert (z.B. in 'niedrig' , 'mittel', 'hoch')           #
 
 categorize <- function(variable){
   if(is.numeric(variable)) # Abfrage ob eigegebene Variable numerisch ist
@@ -326,10 +339,18 @@ categorize <- function(variable){
 
 
 
+
 # 06 VISUALISIERUNG KATEGOR. VARIABLEN -----------------------------------------
 # Eine Funktion, die eine geeignete Visualisierung von drei oder vier          #
 # kategorialen Variablen erstellt                                              #
 
+# Funktion plotet scatterplots von den ersten beiden Parametern VariableX und VariableY 
+# die Anzahl der Plots wird vom dritten Parameter bestimmt. 
+# für jede Auspräung des dritten Parameters wird ein plot  der ersten beiden variablen gezeichnet. 
+visualisiere3Variablen <- function(variableX,VariableY,KachelnErzeugendeVariable){
+  test<-data.frame(ersteVariable=variableX,zweiteVariable=VariableY,dritteVariable=KachelnErzeugendeVariable)
+  ggplot(test,aes(x=ersteVariable,y=zweiteVariable)) + geom_point()  + facet_wrap(~dritteVariable)
+}
 
 
 

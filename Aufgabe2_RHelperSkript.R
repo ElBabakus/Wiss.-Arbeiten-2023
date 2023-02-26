@@ -140,3 +140,7 @@ lade_Datensatz<- function(Dateiname,delimeter){
 speichere_Datensatz<- function(Dateiname,Datensatz){
   write.csv2(Datensatz, Dateiname)
 }
+
+gebeAus<- function(text,wert){
+  cat(text,wert ,"\n") 
+}
