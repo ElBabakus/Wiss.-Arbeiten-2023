@@ -5,7 +5,7 @@
 # Skript 4:                                                                    #
 # Die mit Hilde von Skript A und dem R-Helper-Skript erstellten Funktionen     #
 # sollen genutzt werden, um eine Analyse (Deskription und Visualisuerung)      #
-# der simulierten Daten durchzufuehren.                                         #
+# der simulierten Daten durchzuführen.                                         #
 #                                                                              #
 # Authoren: Florian Haschke, Eva Noether, Rafael Slodzinski                    #  
 #                                                                              #
@@ -27,16 +27,14 @@ library(ggpmisc)  # Minima und Maxima finden
 library(Rmisc )   # Konfidentintervall
 library(tibble)   # Datenstruktur
 
-# 00c EINBINDEN DES R-HELPER-SKRIPTES & SKRIPT A -------------------------------
-# Dieses Skript enthaelt Helferfunktionen. Folgende Funktionen sind enthalten: #
-# Funktion 1: Abfrage und ggf Umwandlung Dataframe                             #
-# Funktion 2: Umwandlung von Variablen in numerische Variablen                 #
 
+# 00c EINBINDEN DES R-HELPER-SKRIPTES & SKRIPT A -------------------------------
 # Ladend des Helfer-Skriptes
 source("./Aufgabe2_RHelperSkript.R")
 
 # Ladend des Skriptes-A
 source("./Aufgabe2_SkriptA.R")
+
 
 # 00b DATEN LADEN --------------------------------------------------------------
 # Einlesen der Daten (als data.frame)
@@ -49,6 +47,31 @@ CheckDataFrame(daten)
 
 
 # 01 DESKRIPTION DER DATEN -----------------------------------------------------
+# 01a BETRACHTUNG LAGE ANHAND VON MEDIAN, MITTELWERT UND MODALWERT -------------
+# Modalwert, Median und Mittelwert ueber die Funktion calculate_metrParam aus 
+# dem Skript A suchen, um sie dann zu vergleichen
+calculate_metrParam(daten)
+Param_mean <- metrParam[["mean"]]
+Param_med <- metrParam[["med"]]
+Param_mod <- metrParam[["modal"]]
+
+# Vergleich der drei Werte und Ausgabe, wwelche Verteilung vorliegt
+  # Anmerkung: all.equal betrachtet dabei, ob die Werte ungefähr gleich sind
+  # all.equals vergleicht standardmaessig bis auf sieben Dezimalstellen
+  # es kann aber auch eine eigene Toleranz festgelegt werden
+if(Param_mod < Param_med & Param_med < Param_mean){
+  print(paste0("Es handelt sich um eine rechtsschiefe Verteilung, da Modalewert: ",
+         Param_mod, " < Median: ", Param_med, " < Mittelwert: ", Param_mean, " ist."))
+} else if(Param_mod > Param_med & Param_med > Param_mean){
+  print(paste0("Es handelt sich um eine linksschiefe Verteilung, da Modalewert: ",
+         Param_mod, " > Median: ", Param_med, " > Mittelwert: ", Param_mean, " ist."))
+} else if(all.equal(Param_mod,Param_med,Param_mean)){
+  print(paste0("Es handelt sich um eine symmetrische Verteilung, da Modalewert: ",
+         Param_mod, " = Median: ", Param_med, " = Mittelwert: ", Param_mean, " ist."))
+} else{
+  print("Es kann keine eindeitige Verteilung festgestellt werden.")
+}
+  
 
 
 # 02 VISUALISIERUNG DER DATEN --------------------------------------------------
