@@ -43,7 +43,7 @@ library(Rmisc )   # Konfidentintervall
 # 00b DATEN LADEN --------------------------------------------------------------
 # Einlesen der Daten (als data.frame)
 # TODO: relativen Pfad anlegen 
-
+source("./Aufgabe2_RHelperSkript.R")
 # daten <- read_csv(file = "\\Datensatz_Aufgabe1.csv")
 library(readr)
 
@@ -159,8 +159,9 @@ calculate_metrParam <- function(daten){
 }
 
 # Aufruf und Ausgabe der Funktion calculate_metrParam
-ergebnis <- calculate_metrParam(daten)
-print(ergebnis)
+
+#ergebnis <- calculate_metrParam(daten)
+#print(ergebnis)
 
 # 02 DESKRIPTIVE STATISTIK - kategor. Variablen --------------------------------
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken            #
@@ -190,7 +191,7 @@ berechne_modalwert <- function(x){
 # Funktion berechnet die Entropie eines Merkmals 
 # Siehe Skript WS22/23 Seite 72 Kap. 5.2
 
-entropy <- function(Variable) {
+entropie <- function(Variable) {
   # Berechne Absolute und relative HÃ¤ufigkeiten 
   absolute <-abs_Haeufigkeiten(Variable)
   freq <- rel_Haeufigkeiten(Variable)
@@ -266,9 +267,6 @@ f <- function(){
   }
   return(A)
 }
-A <- f()
-mosaicplot(A, xlab = "Programmierinteresse", ylab = "Matheinteresse", main = "")
-
 
 # Funktion erzeugt für zwei übergebene Variablen 
 # eine Kontingenztafel : eine Zelle der Tabelle enthält 
@@ -339,8 +337,10 @@ categorize <- function(variable){
 # Freiwillig: weitere zur Deskription und Visualisierung geeignete             #
 # Funktionen                                                                   #
 #
-
-
+erzeuge_Mosaicplot<-function(){
+  A <- f()
+  mosaicplot(A, xlab = "Programmierinteresse", ylab = "Matheinteresse", main = "")  
+}
 
 
 
