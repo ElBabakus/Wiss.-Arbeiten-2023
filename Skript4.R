@@ -70,6 +70,66 @@ if(Param_mod < Param_med & Param_med < Param_mean){
   print("Es kann keine eindeitige Verteilung festgestellt werden.")
 }
   
+# 01b ERSTELLUNG HILFSFUNKTION -------------------------------------------------
+# Funktion zur Zusammenfassung der Daten (Verwendung fuer Plots -> siehe weiter unten)
+# Berechnung von Mittelwert und Standardabweichung 
+data_summary <- function(x) {
+  m <- mean(x)
+  ymin <- m-sd(x)
+  ymax <- m+sd(x)
+  return(c(y=m,ymin=ymin,ymax=ymax))
+}
+
+# 01c BERECHNUNG MEDIAN & SD VOM ALTER IN ABHAENIGKEIT DES STUDIENFACHES ------- 
+# Tabel erstellen, um die Laenge fuer die leeren Data Frames zu ermitteln
+Anzahl_Studienfach <- table(daten$Studienfach)
+
+# leere DataFrames erstellen
+df_D <- data.frame(matrix(ncol=Anzahl_Studienfach[1], nrow=1))   # DataFrame fuer Data Sience
+df_I <- data.frame(matrix(ncol=Anzahl_Studienfach[2], nrow=1))   # DataFrame fuer Informatik
+df_M <- data.frame(matrix(ncol=Anzahl_Studienfach[3], nrow=1))   # DataFrame fuer Mathe
+df_S <- data.frame(matrix(ncol=Anzahl_Studienfach[4], nrow=1))   # DataFrame fuer Statistik
+
+# Zaehlvariablen (als Hilfe fuer die folgende for-Schleife)
+n <- 1
+k <- 1
+t <- 1
+s <- 1
+
+# for-Schleife, um in die vier leeren Data Frames das Alter fuer die jeweiligen
+# Studienfacher zu schreiben
+for(i in 1:nrow(daten)){
+  if(daten$Studienfach[i] == "Data Science"){
+    df_D[n] <- daten$Alter[i]
+    n <- n+1
+  } else if(daten$Studienfach[i] == "Statistik"){
+    df_S[k] <- daten$Alter[i]
+    k <- k+1
+  } else if(daten$Studienfach[i] == "Mathe"){
+    df_M[t] <- daten$Alter[i]
+    t <- t+1
+  } else if(daten$Studienfach[i] == "Informatik"){
+    df_I[s] <- daten$Alter[i]
+    s <- s+1
+  }
+}
+
+# COnvertierung in Num aus dem R-Helper-Skript, um dann die data_summary 
+# Funktion zu nutzen (benoetigt Eingabe von numerischen Variablen)
+df_D <- convert_ToNum2(df_D)
+df_I <- convert_ToNum2(df_I)
+df_M <- convert_ToNum2(df_M)
+df_S <- convert_ToNum2(df_S)
+
+summary_D <- data_summary(df_D)
+summary_I <- data_summary(df_I)
+summary_M <- data_summary(df_M)
+summary_S <- data_summary(df_S)
+
+# Zusammenfassung als ein Data Frame und Ausgabe
+summary <- data.frame(summary_D, summary_I, summary_M, summary_S)
+print(paste0("Es liegt folgende Zusammenfassung fuer Median und Standardabweichungen vor: "))
+print(summary)
 
 # Betrachtung der Variable Alter 
 print("Betrachtung der Variable Alter") 
@@ -116,6 +176,15 @@ print("Ausgabe: Histogram der Variable Alter " )
 hist(Daten$Alter)
 print("Ausgabe: Boxplot der Variable Alter" )
 boxplot(Datensatz_Aufgabe1$Alter)
+
+# 02a VISUALISERUNG ALTER UND STUDIENFACH --------------------------------------
+# VIOLINPLOT
+# mittels ggplot2 und geom-violin (Violinplot)
+p <- ggplot(daten, aes(x = daten$Studienfach, y = daten$Alter)) + geom_violin(trim=FALSE)
+# Median und Range mit hinzufuegen (Nutzung der Funktion data_summary)
+p + stat_summary(fun.data=data_summary, geom="pointrange")
+
+
 
 print("-------------------------------------------")
 print("Visualisierung der bivariater Zusammenhänge ? ") 
