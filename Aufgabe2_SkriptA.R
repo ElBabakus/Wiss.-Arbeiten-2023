@@ -339,11 +339,12 @@ categorize <- function(variable){
 
 
 
+
 # 06 VISUALISIERUNG KATEGOR. VARIABLEN -----------------------------------------
 # Eine Funktion, die eine geeignete Visualisierung von drei oder vier          #
 # kategorialen Variablen erstellt                                              #
 
-# Funktion Plotet scatterplots von den ersten beiden Parametern VariableX und VariableY 
+# Funktion plotet scatterplots von den ersten beiden Parametern VariableX und VariableY 
 # die Anzahl der Plots wird vom dritten Parameter bestimmt. 
 # für jede Auspräung des dritten Parameters wird ein plot  der ersten beiden variablen gezeichnet. 
 visualisiere3Variablen <- function(variableX,VariableY,KachelnErzeugendeVariable){

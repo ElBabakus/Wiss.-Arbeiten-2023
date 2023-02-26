@@ -74,21 +74,16 @@ if(Param_mod < Param_med & Param_med < Param_mean){
 # Betrachtung der Variable Alter 
 print("Betrachtung der Variable Alter") 
 print("Lageparameter der Variable Alter" )
-print(summary(Datensatz_Aufgabe1$Alter))
-print("Der Interquantilsabstand beträgt: ") 
-print(calculate_sd(daten$Alter))
-print("Die Standardabweichung beträgt:")
-print(calculate_iqr(daten$Alter))
+gebeAus("Der Interquantilsabstand beträgt: ",calculate_sd(daten$Alter))
+gebeAus("Die Standardabweichung beträgt:",calculate_iqr(daten$Alter))
 print("-------------------------------------------")
 
 # Betrachtung der Variable Studienfach 
 print("Betrachtung der Variable Studienfach") 
 print("absolute Häufigkeiten")
 print(abs_Haeufigkeiten(Daten$Studienfach))
-print("Entropie der Variable Studienfach: ")
-print(entropie(Datensatz_Aufgabe1$Studienfach))
-print("Normierte Entropie der Variable Studienfach: ")
-print(normierte_Entropie(Datensatz_Aufgabe1$Studienfach))
+gebeAus("Entropie der Variable Studienfach: ",entropie(Datensatz_Aufgabe1$Studienfach))
+gebeAus("Normierte Entropie der Variable Studienfach: ",normierte_Entropie(Datensatz_Aufgabe1$Studienfach))
 
 
 # Betrachtung der Variable Programmierinteresse 
