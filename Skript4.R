@@ -26,6 +26,7 @@ library(svglite)
 library(ggpmisc)  # Minima und Maxima finden
 library(Rmisc )   # Konfidentintervall
 library(tibble)   # Datenstruktur
+library(tidyr)    # Um Funktion gather() zu nutzen (Verbindet zwei Spalten zu einer)
 
 
 # Laden des Skriptes-A
@@ -43,7 +44,7 @@ daten = Datensatz_Aufgabe1
 CheckDataFrame(daten)
 
 
-
+################################################################################
 # 01 DESKRIPTION DER DATEN -----------------------------------------------------
 # 01a BETRACHTUNG LAGE ANHAND VON MEDIAN, MITTELWERT UND MODALWERT -------------
 # Modalwert, Median und Mittelwert ueber die Funktion calculate_metrParam aus 
@@ -97,7 +98,7 @@ t <- 1
 s <- 1
 
 # for-Schleife, um in die vier leeren Data Frames das Alter fuer die jeweiligen
-# Studienfacher zu schreiben
+# Studienfaecher zu schreiben
 for(i in 1:nrow(daten)){
   if(daten$Studienfach[i] == "Data Science"){
     df_D[n] <- daten$Alter[i]
@@ -114,7 +115,7 @@ for(i in 1:nrow(daten)){
   }
 }
 
-# COnvertierung in Num aus dem R-Helper-Skript, um dann die data_summary 
+# Convertierung in Num aus dem R-Helper-Skript, um dann die data_summary 
 # Funktion zu nutzen (benoetigt Eingabe von numerischen Variablen)
 df_D <- convert_ToNum2(df_D)
 df_I <- convert_ToNum2(df_I)
@@ -131,6 +132,7 @@ summary <- data.frame(summary_D, summary_I, summary_M, summary_S)
 print(paste0("Es liegt folgende Zusammenfassung fuer Median und Standardabweichungen vor: "))
 print(summary)
 
+# 01d BETRACHTUNG VON VARIABLEN ------------------------------------------------
 # Betrachtung der Variable Alter 
 print("Betrachtung der Variable Alter") 
 print("Lageparameter der Variable Alter" )
@@ -168,23 +170,39 @@ print(chi2_function(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$MatheLK))
 print("-------------------------------------------")
 
 
-# 02 VISUALISIERUNG DER DATEN --------------------------------------------------
 
+################################################################################
+# 02 VISUALISIERUNG DER DATEN --------------------------------------------------
+# 02a VISUALISIERUNG IN BEZUG AUF DAS ALTER ------------------------------------
 print("Visualisierung der Daten zur Variable Alter") 
 print("Ausgabe: Histogram der Variable Alter " )
 hist(Daten$Alter)
 print("Ausgabe: Boxplot der Variable Alter" )
 boxplot(Datensatz_Aufgabe1$Alter)
 
-# 02a VISUALISERUNG ALTER UND STUDIENFACH --------------------------------------
+# 02b VISUALISERUNG ALTER UND STUDIENFACH --------------------------------------
 # VIOLINPLOT
 # mittels ggplot2 und geom-violin (Violinplot)
-p <- ggplot(daten, aes(x = daten$Studienfach, y = daten$Alter)) + geom_violin(trim=FALSE)
+vio1 <- ggplot(daten, aes(x = daten$Studienfach, y = daten$Alter)) + geom_violin(trim=FALSE)
 # Median und Range mit hinzufuegen (Nutzung der Funktion data_summary)
-p + stat_summary(fun.data=data_summary, geom="pointrange")
-print(p)
+vio1 + stat_summary(fun.data=data_summary, geom="pointrange")
+print(vio1)
 
+# 02c VISUALISERUNG ALTER UND INTERESSEN ---------------------------------------
+# VIOLINPLOT
+# mittels ggplot2 und geom-violin (Violinplot)
+# Zunaechst muessen das Matheinteresse und das Programmierinteresse zu einer 
+# Spalte zusammengefasst werden
+df_interesse <- gather(daten, key = "Interesseart", value = "Interesse", -Studienfach, -...1,-MatheLK,-Alter)
+vio2 <- ggplot(df_interesse, aes(x = Studienfach, y = Interesse, fill = Interesseart)) + 
+    geom_violin(scale = "width", trim = FALSE) +
+    facet_grid(rows = vars(Interesseart))
+# Median und Range mit hinzufuegen (Nutzung der Funktion data_summary)
+vio2 + stat_summary(fun.data=data_summary, geom="pointrange")
+print(vio2)
 
+# 02d VISUALISIERUNG VON 3 VARIABLEN -------------------------------------------
+# Visualisierung von dem Programmier- sowie Matheinteresse und dem Studienfach
 print("-------------------------------------------")
 print("Visualisierung von 3 Variablen in einer Graphik")
 testplot <- visualisiere3Variablen(Datensatz_Aufgabe1$Programmierinteresse,Datensatz_Aufgabe1$Matheinteresse,"Programmieren","MatheInteresse",Datensatz_Aufgabe1$Studienfach)
