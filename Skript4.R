@@ -71,6 +71,7 @@ if(Param_mod < Param_med & Param_med < Param_mean){
   print("Es kann keine eindeitige Verteilung festgestellt werden.")
 }
   
+--------------------------------------------------------------------------------
 # 01b ERSTELLUNG HILFSFUNKTION -------------------------------------------------
 # Funktion zur Zusammenfassung der Daten (Verwendung fuer Plots -> siehe weiter unten)
 # Berechnung von Mittelwert und Standardabweichung 
@@ -81,6 +82,7 @@ data_summary <- function(x) {
   return(c(y=m,ymin=ymin,ymax=ymax))
 }
 
+--------------------------------------------------------------------------------
 # 01c BERECHNUNG MEDIAN & SD VOM ALTER IN ABHAENIGKEIT DES STUDIENFACHES ------- 
 # Tabel erstellen, um die Laenge fuer die leeren Data Frames zu ermitteln
 Anzahl_Studienfach <- table(daten$Studienfach)
@@ -132,6 +134,8 @@ summary <- data.frame(summary_D, summary_I, summary_M, summary_S)
 print(paste0("Es liegt folgende Zusammenfassung fuer Median und Standardabweichungen vor: "))
 print(summary)
 
+
+--------------------------------------------------------------------------------
 # 01d BETRACHTUNG VON VARIABLEN ------------------------------------------------
 # Betrachtung der Variable Alter 
 print("Betrachtung der Variable Alter") 
@@ -154,6 +158,33 @@ gebeAus("Normierte Entropie der Variable Studienfach: ",normierte_Entropie(Daten
 # Betrachtung der Variable Matheinteresse 
 
 # Betrachtung der Variable MatheLK 
+
+
+--------------------------------------------------------------------------------
+# 01e BETRACHTUNG DES AUFTRETENS DER STUDIENFAECHER ----------------------------
+# Annahme der Wahrscheinlichkeiten
+# Erwartete Wahrscheinlihckeit der Beobachtungen in jeder Kategorie
+# Data Science und Statistik sollen gleiche Wahrscheinlichkeit haben,
+# Informatik soll geringere und Mathe geringste Wahrscheinlichkeit haben
+expected <- c(0.35, 0.2, 0.1, 0.35) # Data Science, Informatik, Mathe, Statistik
+
+# Zaehlen der Beobachtungen in jeder Kategorie
+observed <- table(daten$Studienfach)
+
+# Chi-Quadrat-Test
+result_chisq <- chisq.test(observed, p = expected)
+chisq_pValue <- result_chisq[["p.value"]]
+
+if(chisq_pValue < 0.05){
+  cat("Der p-Wert ", chisq_pValue, " ist kleiner als das Signifikanzniveau von 0.05. Somit kann davon ausgegangen werden, 
+      dass die tatsächlichen Beobachtungen signifikant von den erwarteten Beobachtungen abweichen.", "\n", sep = "")
+} else{
+  cat("Der p-Wert ", chisq_pValue, " ist größer oder gleich dem Signifikanzniveau von 0.05. Somit kann nicht davon ausgegangen werden, 
+      dass die  tatsächlichen Beobachtungen signifikant von den erwarteten Beobachtungen abweichen.", "\n", sep = "")
+}
+
+
+
 
 
 ######################### Bivariate Betachtung der Variablen #####################
@@ -180,6 +211,7 @@ hist(Daten$Alter)
 print("Ausgabe: Boxplot der Variable Alter" )
 boxplot(Datensatz_Aufgabe1$Alter)
 
+--------------------------------------------------------------------------------
 # 02b VISUALISERUNG ALTER UND STUDIENFACH --------------------------------------
 # VIOLINPLOT
 # mittels ggplot2 und geom-violin (Violinplot)
@@ -188,6 +220,7 @@ vio1 <- ggplot(daten, aes(x = daten$Studienfach, y = daten$Alter)) + geom_violin
 vio1 + stat_summary(fun.data=data_summary, geom="pointrange")
 print(vio1)
 
+--------------------------------------------------------------------------------
 # 02c VISUALISERUNG ALTER UND INTERESSEN ---------------------------------------
 # VIOLINPLOT
 # mittels ggplot2 und geom-violin (Violinplot)
@@ -201,6 +234,7 @@ vio2 <- ggplot(df_interesse, aes(x = Studienfach, y = Interesse, fill = Interess
 vio2 + stat_summary(fun.data=data_summary, geom="pointrange")
 print(vio2)
 
+--------------------------------------------------------------------------------
 # 02d VISUALISIERUNG VON 3 VARIABLEN -------------------------------------------
 # Visualisierung von dem Programmier- sowie Matheinteresse und dem Studienfach
 print("-------------------------------------------")
