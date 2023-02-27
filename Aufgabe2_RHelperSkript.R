@@ -144,3 +144,13 @@ speichere_Datensatz<- function(Dateiname,Datensatz){
 gebeAus<- function(text,wert){
   cat(text,wert ,"\n") 
 }
+
+# 01b ERSTELLUNG HILFSFUNKTION -------------------------------------------------
+# Funktion zur Zusammenfassung der Daten (Verwendung fuer Plots -> siehe weiter unten)
+# Berechnung von Mittelwert und Standardabweichung 
+data_summary <- function(x) {
+  m <- mean(x)
+  ymin <- m-sd(x)
+  ymax <- m+sd(x)
+  return(c(y=m,ymin=ymin,ymax=ymax))
+}

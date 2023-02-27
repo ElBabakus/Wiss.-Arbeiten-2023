@@ -36,8 +36,8 @@ source("./Aufgabe2_SkriptA.R")
 # 00b DATEN LADEN --------------------------------------------------------------
 # Einlesen der Daten (als data.frame)
 daten <- read.csv2(file = "./Datensatz_Aufgabe1.csv")
-Datensatz_Aufgabe1 <- lade_Datensatz("Datensatz_Aufgabe1.csv", delim = ";")
-daten = Datensatz_Aufgabe1
+#daten <- lade_Datensatz("Datensatz_Aufgabe1.csv", delim = ";")
+#daten = daten
 
 # Ueberpruefen, ob Daten als DataFrame vorliegen, und wenn nicht Umwandlung in ein
 # solches mit Hilde einer FUnktion aus dem R-Helper-Skript
@@ -71,18 +71,9 @@ if(Param_mod < Param_med & Param_med < Param_mean){
   print("Es kann keine eindeitige Verteilung festgestellt werden.")
 }
   
---------------------------------------------------------------------------------
-# 01b ERSTELLUNG HILFSFUNKTION -------------------------------------------------
-# Funktion zur Zusammenfassung der Daten (Verwendung fuer Plots -> siehe weiter unten)
-# Berechnung von Mittelwert und Standardabweichung 
-data_summary <- function(x) {
-  m <- mean(x)
-  ymin <- m-sd(x)
-  ymax <- m+sd(x)
-  return(c(y=m,ymin=ymin,ymax=ymax))
-}
+#--------------------------------------------------------------------------------
 
---------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
 # 01c BERECHNUNG MEDIAN & SD VOM ALTER IN ABHAENIGKEIT DES STUDIENFACHES ------- 
 # Tabel erstellen, um die Laenge fuer die leeren Data Frames zu ermitteln
 Anzahl_Studienfach <- table(daten$Studienfach)
@@ -135,32 +126,20 @@ print(paste0("Es liegt folgende Zusammenfassung fuer Median und Standardabweichu
 print(summary)
 
 
---------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
 # 01d BETRACHTUNG VON VARIABLEN ------------------------------------------------
 # Betrachtung der Variable Alter 
-print("Betrachtung der Variable Alter") 
-print("Lageparameter der Variable Alter" )
-gebeAus("Der Interquantilsabstand betrÃ¤gt: ",calculate_sd(daten$Alter))
-gebeAus("Die Standardabweichung betrÃ¤gt:",calculate_iqr(daten$Alter))
 print("-------------------------------------------")
 
 # Betrachtung der Variable Studienfach 
 print("Betrachtung der Variable Studienfach") 
 print("absolute HÃ¤ufigkeiten")
 print(abs_Haeufigkeiten(Daten$Studienfach))
-gebeAus("Entropie der Variable Studienfach: ",entropie(Datensatz_Aufgabe1$Studienfach))
-gebeAus("Normierte Entropie der Variable Studienfach: ",normierte_Entropie(Datensatz_Aufgabe1$Studienfach))
+gebeAus("Entropie der Variable Studienfach: ",entropie(daten$Studienfach))
+gebeAus("Normierte Entropie der Variable Studienfach: ",normierte_Entropie(daten$Studienfach))
 
 
-# Betrachtung der Variable Programmierinteresse 
-
-
-# Betrachtung der Variable Matheinteresse 
-
-# Betrachtung der Variable MatheLK 
-
-
---------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
 # 01e BETRACHTUNG DES AUFTRETENS DER STUDIENFAECHER ----------------------------
 # Annahme der Wahrscheinlichkeiten
 # Erwartete Wahrscheinlihckeit der Beobachtungen in jeder Kategorie
@@ -177,31 +156,47 @@ chisq_pValue <- result_chisq[["p.value"]]
 
 if(chisq_pValue < 0.05){
   cat("Der p-Wert ", chisq_pValue, " ist kleiner als das Signifikanzniveau von 0.05. Somit kann davon ausgegangen werden, 
-      dass die tatsächlichen Beobachtungen signifikant von den erwarteten Beobachtungen abweichen.", "\n", sep = "")
+      dass die tats?chlichen Beobachtungen signifikant von den erwarteten Beobachtungen abweichen.", "\n", sep = "")
 } else{
-  cat("Der p-Wert ", chisq_pValue, " ist größer oder gleich dem Signifikanzniveau von 0.05. Somit kann nicht davon ausgegangen werden, 
-      dass die  tatsächlichen Beobachtungen signifikant von den erwarteten Beobachtungen abweichen.", "\n", sep = "")
+  cat("Der p-Wert ", chisq_pValue, " ist gr??er oder gleich dem Signifikanzniveau von 0.05. Somit kann nicht davon ausgegangen werden, 
+      dass die  tats?chlichen Beobachtungen signifikant von den erwarteten Beobachtungen abweichen.", "\n", sep = "")
 }
-
-
 
 
 
 ######################### Bivariate Betachtung der Variablen #####################
 print######################## Bivariate Betachtung der Variablen #####################")
 print("Kontingenztafel zu Studienfach und Matheinteresse")
-print(Kreuztabelle(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$Matheinteresse))
-print(chi2_function(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$Matheinteresse))
+print(Kreuztabelle(daten$Studienfach,daten$Matheinteresse))
+print(chi2_function(daten$Studienfach,daten$Matheinteresse))
 print("-------------Kontingenztafel zu Studienfach und Programmierinteresse-------------")
-print(Kreuztabelle(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$Programmierinteresse))
-print(chi2_function(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$Programmierinteresse))
+print(Kreuztabelle(daten$Studienfach,daten$Programmierinteresse))
+print(chi2_function(daten$Studienfach,daten$Programmierinteresse))
 print("-------------Kontingenztafel zu Studienfach und MatheLK-------------")
-print(Kreuztabelle(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$MatheLK))
-print(chi2_function(Datensatz_Aufgabe1$Studienfach,Datensatz_Aufgabe1$MatheLK))
+print(Kreuztabelle(daten$Studienfach,daten$MatheLK))
+print(chi2_function(daten$Studienfach,daten$MatheLK))
 print("-------------------------------------------")
 
 
+########################################################################
+#-------------------------------------------------------------------------------
+# 02f  bivariate Statistik fÃ¼r den Zusammengang zwischen einer metrischen und einer
+# dichotomen  Variablen                --------  
+#-------------------------------------------------------------------------------
+print("bivariate Statistik fÃ¼r den Zusammengang zwischen einer metrischen und einer dichotomen  Variablen")
+gebeAus("Berechung des Zusammenhangs  : ",punktbiserale_Korrelation(daten$MatheLK,"ja",daten$Alter))
 
+
+########################################################################
+#-------------------------------------------------------------------------------
+# 02g Auswertung der Quantilbasierte Kategoriesierung                   --------
+#-------------------------------------------------------------------------------
+print("------------Quartilsbasierte Kategorisierung-----Matheinteresse--------------------------")
+print(categorize(daten$Matheinteresse))
+print("-------------------------------------------")
+print("------------Quartilsbasierte Kategorisierung-----Programmierinteresse--------------------")
+print(categorize(daten$Programmierinteresse))
+print("-------------------------------------------")
 ################################################################################
 # 02 VISUALISIERUNG DER DATEN --------------------------------------------------
 # 02a VISUALISIERUNG IN BEZUG AUF DAS ALTER ------------------------------------
@@ -209,24 +204,24 @@ print("Visualisierung der Daten zur Variable Alter")
 print("Ausgabe: Histogram der Variable Alter " )
 hist(Daten$Alter)
 print("Ausgabe: Boxplot der Variable Alter" )
-boxplot(Datensatz_Aufgabe1$Alter)
+boxplot(daten$Alter)
 
---------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
 # 02b VISUALISERUNG ALTER UND STUDIENFACH --------------------------------------
 # VIOLINPLOT
 # mittels ggplot2 und geom-violin (Violinplot)
-vio1 <- ggplot(daten, aes(x = daten$Studienfach, y = daten$Alter)) + geom_violin(trim=FALSE)
+vio1 <- ggplot(daten, aes(x = Studienfach, y = Alter)) + geom_violin(trim=FALSE)
 # Median und Range mit hinzufuegen (Nutzung der Funktion data_summary)
 vio1 + stat_summary(fun.data=data_summary, geom="pointrange")
-print(vio1)
+#print(vio1)
 
---------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
 # 02c VISUALISERUNG ALTER UND INTERESSEN ---------------------------------------
 # VIOLINPLOT
 # mittels ggplot2 und geom-violin (Violinplot)
 # Zunaechst muessen das Matheinteresse und das Programmierinteresse zu einer 
 # Spalte zusammengefasst werden
-df_interesse <- gather(daten, key = "Interesseart", value = "Interesse", -Studienfach, -...1,-MatheLK,-Alter)
+df_interesse <- gather(daten, key = "Interesseart", value = "Interesse", -Studienfach, -X,-MatheLK,-Alter)
 vio2 <- ggplot(df_interesse, aes(x = Studienfach, y = Interesse, fill = Interesseart)) + 
     geom_violin(scale = "width", trim = FALSE) +
     facet_grid(rows = vars(Interesseart))
@@ -234,12 +229,14 @@ vio2 <- ggplot(df_interesse, aes(x = Studienfach, y = Interesse, fill = Interess
 vio2 + stat_summary(fun.data=data_summary, geom="pointrange")
 print(vio2)
 
---------------------------------------------------------------------------------
-# 02d VISUALISIERUNG VON 3 VARIABLEN -------------------------------------------
+
+
+#--------------------------------------------------------------------------------
+# 02f VISUALISIERUNG VON 3 VARIABLEN -------------------------------------------
 # Visualisierung von dem Programmier- sowie Matheinteresse und dem Studienfach
 print("-------------------------------------------")
 print("Visualisierung von 3 Variablen in einer Graphik")
-testplot <- visualisiere3Variablen(Datensatz_Aufgabe1$Programmierinteresse,Datensatz_Aufgabe1$Matheinteresse,"Programmieren","MatheInteresse",Datensatz_Aufgabe1$Studienfach)
+testplot <- visualisiere3Variablen(daten$Programmierinteresse,daten$Matheinteresse,"Programmieren","MatheInteresse",daten$Studienfach)
 plot(testplot)
 print("-------------------------------------------")
 
