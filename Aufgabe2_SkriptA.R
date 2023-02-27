@@ -95,7 +95,8 @@ calculate_thirdQ <- function(x){
 
 # Modalwert
 calculate_mod <- function(x){
-  names(x)[which.max(x)]
+  modal <- unique(x)
+  modal[which.max(tabulate(match(x, modal)))]
 }
 
 # Spannweite
