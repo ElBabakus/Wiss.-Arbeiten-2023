@@ -236,6 +236,7 @@ print(vio2)
 # Visualisierung von dem Programmier- sowie Matheinteresse und dem Studienfach
 print("-------------------------------------------")
 print("Visualisierung von 3 Variablen in einer Graphik")
+erzeuge_Mosaicplot()
 testplot <- visualisiere3Variablen(daten$Programmierinteresse,daten$Matheinteresse,"Programmieren","MatheInteresse",daten$Studienfach)
 plot(testplot)
 print("-------------------------------------------")
