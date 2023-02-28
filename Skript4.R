@@ -183,9 +183,9 @@ print("-------------------------------------------")
 # 02f  bivariate Statistik für den Zusammengang zwischen einer metrischen und einer
 # dichotomen  Variablen                --------  
 #-------------------------------------------------------------------------------
-print("bivariate Statistik für den Zusammengang zwischen einer metrischen und einer dichotomen  Variablen")
-gebeAus("Berechung des Zusammenhangs  : ",punktbiserale_Korrelation(daten$MatheLK,"ja",daten$Alter))
-
+print("bivariate Statistik für den Zusammengang zwischen einer metrischen und einer dichotomen  Variablen hier : Alter vs. MatheLK")
+gebeAus("Berechung des Zusammenhangs   : ",punktbiserale_Korrelation(daten$MatheLK,"ja",daten$Alter))
+print("Interpretation es gibt keinen Zusammenhang zwischen Alter vs. MatheLK")
 
 ########################################################################
 #-------------------------------------------------------------------------------
